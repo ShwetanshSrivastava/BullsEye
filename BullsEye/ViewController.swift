@@ -17,12 +17,30 @@ class ViewController: UIViewController {
     @IBOutlet weak var targetLabel:UILabel!
     @IBOutlet weak var scoreLabel:UILabel!
     @IBOutlet weak var roundLabel:UILabel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let roundedValue = slider.value.rounded()
         currentValue = Int(roundedValue)
         startRound()
+        
+//        let thumbNormal = UIImage(named: "SliderThumb-Normal")!
+        let thumbNormal = #imageLiteral(resourceName: "SliderThumb-Normal")
+        slider.setThumbImage(thumbNormal, for: .normal)
+        
+        let thumbImageHightlighted = #imageLiteral(resourceName: "SliderThumb-Highlighted")
+        slider.setThumbImage(thumbImageHightlighted, for: .highlighted)
+
+        let insets = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
+
+        let trackLeftImage = #imageLiteral(resourceName: "SliderTrackLeft")
+        let trackLeftImageResizable = trackLeftImage.resizableImage(withCapInsets: insets)
+        slider.setMinimumTrackImage(trackLeftImageResizable, for: .normal)
+
+        let trackRightImage = #imageLiteral(resourceName: "SliderTrackRight")
+        let trackRightImageResizable = trackRightImage.resizableImage(withCapInsets: insets)
+        slider.setMaximumTrackImage(trackRightImageResizable, for: .normal)
+
     }
 
     @IBAction func showAlert() {
@@ -38,21 +56,24 @@ class ViewController: UIViewController {
         score += points
         var title:String {
             if points == 100 {
-                return "Perfect"
+                return "Perfect Score"
             } else if points > 90 {
                 return "You almost had it"
             } else {
-                return "far from home"
+                return "Far from home"
             }
         }
         let message:String = "You Scored: \(points) points"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Exit", style: .default, handler: nil)
+        let action = UIAlertAction(title: "Exit", style: .default, handler: {
+            action in
+            self.startRound()
+        })
         
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-        startRound()
+
     }
     
     @IBAction func sliderMoved(_ slider: UISlider) {
@@ -71,6 +92,11 @@ class ViewController: UIViewController {
         targetLabel.text = String(targetValue)
         scoreLabel.text = String(score)
         roundLabel.text = String(round)
+    }
+    @IBAction func startOver() {
+        score = 0
+        round = 0
+        startRound()
     }
 }
 
