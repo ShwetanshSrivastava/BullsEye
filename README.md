@@ -6,8 +6,8 @@ on how close the guess was.
 
 What I Learned -
 
-IB Actions 
-IB Outlets
-Basic UI Elements
-Introduction to WebKit 
+IB Actions |
+IB Outlets |
+Basic UI Elements |
+Introduction to WebKit | 
 Introduction to Auto Layout
